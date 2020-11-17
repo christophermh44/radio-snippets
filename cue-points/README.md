@@ -34,6 +34,8 @@ Here is a simple preview of the position of the cue points.
    B     S                          N     E
 ```
 
+You will get more details about the implementation inside [the javascript code](app.js).
+
 ## Known bugs
 
 * The cue points computing is not determinist. It is probably due to the way that the browser implements the script processor audio node. It does not change anything about the way the algorithm works theorically, but it can provide some different results when clicking several times on the "Compute" buttons.
