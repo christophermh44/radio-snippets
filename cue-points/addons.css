@@ -1,0 +1,26 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.w-100p {
+    width: 100%;
+}
+
+legend {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+.strong {
+    font-weight: bold;
+}
+
+.em {
+    font-style: italic;
+}
+
+input, textarea, select {
+    width: 100%;
+}

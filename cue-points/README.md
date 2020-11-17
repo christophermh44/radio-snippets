@@ -6,10 +6,10 @@ This snippet is an example of algorithm that looks for mix points of an audio fi
 
 It finds automatically 4 cue points:
 
-* BEGIN - When the audio starts.
-* START - Mix point with previous audio file played.
-* NEXT - Mix point with next audio file played.
-* END - When the audio ends.
+* **B**EGIN - When the audio starts.
+* **S**TART - Mix point with previous audio file played.
+* **N**EXT - Mix point with next audio file played.
+* **E**ND - When the audio ends.
 
 The algorithm starts looking for the START cue point based on a defined audio level peak or an audio level reached for a defined duration.
 

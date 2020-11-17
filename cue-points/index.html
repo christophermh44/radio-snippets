@@ -3,8 +3,126 @@
 <head>
 <meta charset="utf-8">
 <title>Cue points</title>
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="addons.css">
 </head>
 <body>
+<div id="app">
+
+<h1>Cue points</h1>
+
+<p>
+    Drag and drop an audio file onto the input below, then click the "Compute" button and let the magic happen!
+</p>
+
+<p>
+    <a href="https://github.com/christophermh44/radio-snippets/blob/main/cue-points/README.md">Read more</a>
+</p>
+
+<form action="#" @submit.prevent="compute" novalidate>
+    <fieldset>
+        <legend>File selection</legend>
+        <p>
+            <label for="file">Audio file</label>
+            <input type="file" id="file" name="file" ref="file" v-model="file" accept="audio/*">
+        </p>
+        <details>
+            <summary>Settings</summary>
+            <div>
+                <fieldset>
+                    <legend>START detection</legend>
+                    <p>
+                        <label for="start-level">Start level (dB)</label>
+                        <input type="number" id="start-level" v-model.number="settings.start_level">
+                    </p>
+                    <p>
+                        <label for="start-duration">Duration (s)</label>
+                        <input type="number" id="start-duration" v-model.number="settings.start_duration">
+                    </p>
+                    <p class="strong">
+                        OR
+                    </p>
+                    <p>
+                        <label for="start-peak-level">Start peak level (dB)</label>
+                        <input type="number" id="start-peak-level" v-model.number="settings.start_peak_level">
+                    </p>
+                    <p class="em">
+                        Both detections will be computed. The first one that will be triggered will define the position of the cue point.
+                    </p>
+                </fieldset>
+                <fieldset>
+                    <legend>NEXT detection</legend>
+                    <p>
+                        <label for="next-level">Next level (dB)</label>
+                        <input type="number" id="next-level" v-model.number="settings.next_level">
+                    </p>
+                    <p>
+                        <label for="next-duration">Duration (s)</label>
+                        <input type="number" id="next-duration" v-model.number="settings.next_duration">
+                    </p>
+                    <p class="strong">
+                        OR
+                    </p>
+                    <p>
+                        <label for="next-peak-level">Next peak level (dB)</label>
+                        <input type="number" id="next-peak-level" v-model.number="settings.next_peak_level">
+                    </p>
+                    <p class="em">
+                        Both detections will be computed. The first one that will be triggered will define the position of the cue point.
+                    </p>
+                </fieldset>
+                <fieldset>
+                    <legend>Fades</legend>
+                    <p>
+                        <label for="begin-fade">Begin fade (s)</label>
+                        <input type="number" id="begin-fade" v-model.number="settings.begin_fade">
+                    </p>
+                    <p>
+                        <label for="end-fade">End fade (s)</label>
+                        <input type="number" id="end-fade" v-model.number="settings.end_fade">
+                    </p>
+                </fieldset>
+            </div>
+        </details>
+        <p>
+            <button type="submit" :disabled="!file || computing">Compute</button>
+        </p>
+    </fieldset>
+
+    <fieldset>
+        <legend>Output</legend>
+
+        <p>
+            <audio ref="audio" controls class="w-100p"></audio>
+        </p>
+
+        <h2>Computed cue points</h2>
+
+        <p>
+            <label for="BEGIN">BEGIN:</label>
+            <output id="BEGIN" v-text="computing ? 'Computing…' : cue.begin"></output>
+        </p>
+
+        <p>
+            <label for="START">START:</label>
+            <output id="START" v-text="computing ? 'Computing…' : cue.start"></output>
+        </p>
+
+        <p>
+            <label for="NEXT">NEXT:</label>
+            <output id="NEXT" v-text="computing ? 'Computing…' : cue.next"></output>
+        </p>
+
+        <p>
+            <label for="END">END:</label>
+            <output id="END" v-text="computing ? 'Computing…' : cue.end"></output>
+        </p>
+    </fieldset>
+</form>
+</div>
+
+<script src="vue.min.js"></script>
+<script type="module" src="app.js"></script>
 
 </body>
 </html>
