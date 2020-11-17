@@ -111,7 +111,7 @@ let app = new Vue({
       start_peak_level: -15.0,
       start_level: -30.0,
       start_duration: 0.5,
-      next_peak_level: -20.0,
+      next_peak_level: -15.0,
       next_level: -30.0,
       next_duration: 0.5,
       begin_fade: 0.0,
@@ -211,7 +211,7 @@ let app = new Vue({
       this.cue.next = await this.findCue(sourceReversed, this.settings.next_level, this.settings.next_duration, this.settings.next_peak_level)
       this.cue.begin = Math.max(0, this.cue.start - this.settings.begin_fade)
       this.cue.end = Math.max(0, this.cue.next - this.settings.end_fade)
-      this.cue.next = duration - this.cue.next
+      this.cue.next = duration - this.cue.next - this.settings.next_duration
       this.cue.end = duration - this.cue.end
       this.computing = false
       this.found = true
