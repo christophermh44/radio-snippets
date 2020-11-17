@@ -2,7 +2,7 @@
 
 This snippet is an example of algorithm that looks for mix points of an audio file.
 
-## How it works?
+## How it works
 
 It finds automatically 4 cue points:
 
