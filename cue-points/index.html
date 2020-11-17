@@ -99,21 +99,25 @@
         <h2>Computed cue points</h2>
 
         <p>
+            <button type="button" :disabled="!found" @click="playAt(cue.begin)">Play</button>
             <label for="BEGIN">BEGIN:</label>
             <output id="BEGIN" v-text="computing ? 'Computing…' : cue.begin"></output>
         </p>
 
         <p>
+            <button type="button" :disabled="!found" @click="playAt(cue.start)">Play</button>
             <label for="START">START:</label>
             <output id="START" v-text="computing ? 'Computing…' : cue.start"></output>
         </p>
 
         <p>
+            <button type="button" :disabled="!found" @click="playAt(cue.next)">Play</button>
             <label for="NEXT">NEXT:</label>
             <output id="NEXT" v-text="computing ? 'Computing…' : cue.next"></output>
         </p>
 
         <p>
+            <button type="button" :disabled="!found" @click="playAt(cue.end)">Play</button>
             <label for="END">END:</label>
             <output id="END" v-text="computing ? 'Computing…' : cue.end"></output>
         </p>

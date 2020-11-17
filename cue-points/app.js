@@ -4,6 +4,7 @@ let app = new Vue({
     ctx: new AudioContext,
     file: null,
     computing: false,
+    found: false,
     cue: {
       begin: 0.0,
       start: 0.0,
@@ -114,7 +115,13 @@ let app = new Vue({
       this.cue.next = duration - this.cue.next
       this.cue.end = duration - this.cue.end
       this.computing = false
+      this.found = true
       this.$forceUpdate()
+    },
+
+    playAt(cue) {
+      this.$refs.audio.currentTime = cue
+      this.$refs.audio.play()
     },
 
     compute() {
