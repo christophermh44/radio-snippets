@@ -21,6 +21,68 @@ legend {
     font-style: italic;
 }
 
+.monospace {
+    font-family: monospace;
+}
+
 input, textarea, select {
     width: 100%;
+}
+
+.playlist {
+    padding: 0;
+}
+
+.playlist--empty {
+    background-color: var(--background-alt);
+    border-radius: 6px;
+    padding: 10px;
+}
+
+.playlist-item {
+    background-color: var(--background-alt);
+    border-radius: 6px;
+    list-style-type: none;
+    margin-bottom: 0.5em;
+    padding: 10px;
+}
+
+.playlist-item__header {
+    margin-bottom: 0.5em;
+}
+
+.playlist-item__name {
+    margin-left: 0.5em;
+}
+
+.lds-dual-ring {
+    display: inline-block;
+    width: 80px;
+    height: 28px;
+    transform: scale(0.375);
+}
+
+.lds-dual-ring::after {
+    content: " ";
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid #fff;
+    border-color: #fff transparent #fff transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+}
+
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.button-small {
+    padding: 0.5em;
 }

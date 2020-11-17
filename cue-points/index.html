@@ -24,7 +24,7 @@
         <legend>File selection</legend>
         <p>
             <label for="file">Audio file</label>
-            <input type="file" id="file" name="file" ref="file" v-model="file" accept="audio/*">
+            <input type="file" id="file" name="file" ref="file" v-model="file" accept="audio/*" @change="found = false">
         </p>
         <details>
             <summary>Settings</summary>
@@ -85,7 +85,13 @@
             </div>
         </details>
         <p>
-            <button type="submit" :disabled="!file || computing">Compute</button>
+            <button type="submit" :disabled="!file || computing">
+                Compute
+            </button>
+        </p>
+        <p v-show="computing">
+            <span class="lds-dual-ring"></span>
+            {{ message }}
         </p>
     </fieldset>
 
@@ -96,30 +102,53 @@
             <audio ref="audio" controls class="w-100p"></audio>
         </p>
 
-        <h2>Computed cue points</h2>
+        <p v-for="(value, name) in cue">
+            <button class="monospace" type="button" :disabled="!found" @click="playAt(value)">▶</button>
+            <label :for="name" v-text="name"></label>
+            <input type="number" :id="name" v-model.number="cue[name]" :disabled="computing">
+        </p>
+    </fieldset>
+
+    <fieldset>
+        <legend>Playground</legend>
 
         <p>
-            <button type="button" :disabled="!found" @click="playAt(cue.begin)">Play</button>
-            <label for="BEGIN">BEGIN:</label>
-            <output id="BEGIN" v-text="computing ? 'Computing…' : cue.begin"></output>
+            <button type="button" @click="add" :disabled="!found">Add to playlist</button>
         </p>
 
-        <p>
-            <button type="button" :disabled="!found" @click="playAt(cue.start)">Play</button>
-            <label for="START">START:</label>
-            <output id="START" v-text="computing ? 'Computing…' : cue.start"></output>
-        </p>
+        <template v-if="playlist.length">
+            <div class="playlist">
+                <div class="playlist-item" v-for="(item, index) in playlist" ref="item" :key="index">
+                    <div class="playlist-item__header">
+                        <button class="button-small" type="button" @click="move(index, index - 1)" :disabled="index === 0">⇧</button>
+                        <button class="button-small" type="button" @click="move(index, index + 1)" :disabled="index === playlist.length - 1">⇩</button>
+                        <button class="button-small" type="button" @click="remove(index)">×</button>
+                        <span class="strong playlist-item__name" v-text="item.name"></span>
+                    </div>
+                    <div>
+                        <input type="range" v-model="item.audio.currentTime" min="0" :max="item.audio.duration" step="0.01">
+                        <span v-text="formatTime(item.audio.currentTime)"></span> / <span v-text="formatTime(item.audio.duration)"></span>
+                    </div>
+                    <details>
+                        <summary>Cues</summary>
+                        <ul>
+                            <li v-for="(value, name) in item.cue">
+                                {{ name }}: {{ formatTime(value) }}
+                            </li>
+                        </ul>
+                    </details>
+                </div>
+            </div>
+        </template>
+        <template v-else>
+            <p class="playlist playlist--empty">
+                The playlist is empty.
+            </p>
+        </template>
 
         <p>
-            <button type="button" :disabled="!found" @click="playAt(cue.next)">Play</button>
-            <label for="NEXT">NEXT:</label>
-            <output id="NEXT" v-text="computing ? 'Computing…' : cue.next"></output>
-        </p>
-
-        <p>
-            <button type="button" :disabled="!found" @click="playAt(cue.end)">Play</button>
-            <label for="END">END:</label>
-            <output id="END" v-text="computing ? 'Computing…' : cue.end"></output>
+            <button type="button" @click="playPlaylist" :disabled="playlist.length === 0 || playing">Play</button>
+            <button type="button" @click="stopPlaylist" :disabled="!playing">Stop</button>
         </p>
     </fieldset>
 </form>
